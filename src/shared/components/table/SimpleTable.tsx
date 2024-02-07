@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { FlexCol } from "../containers/FlexCol";
 import { FlexRow } from "../containers/FlexRow";
 import { Typography } from "../text/Typography/Typography";
@@ -8,6 +9,7 @@ export interface TableLabel {
   id: string;
   label: string;
   align?: "text-left" | "text-center" | "text-right";
+  sortable?: boolean;
 }
 
 interface Settings {
@@ -22,6 +24,7 @@ interface GenericSimpleTableProps {
   filterComponent?: React.ReactNode;
   footerComponent?: React.ReactNode;
   settings?: Settings;
+  handleSort?: (columnId: string) => void;
 }
 
 const DefaultSettings: Settings = {
@@ -78,6 +81,18 @@ export const SimpleTable = ({
   footerComponent,
   settings = { skeletonRowCount: 5 },
 }: GenericSimpleTableProps) => {
+  const [sortColumn, setSortColumn] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
+  const handleSort = (columnId: string) => {
+    if (sortColumn === columnId) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortColumn(columnId);
+      setSortOrder("asc");
+    }
+  };
+
   return (
     <div className="text-text-secondary">
       <FlexRow className="p-1 px-6 justify-between ">
@@ -92,6 +107,9 @@ export const SimpleTable = ({
             <FlexCol
               key={column.id}
               className={`flex-1 ${column.align ? `${column.align}` : "text-center"} text-sm font-medium text-gray-500`}
+              onClick={() =>
+                column.sortable && handleSort ? handleSort(column.id) : null
+              }
             >
               <Typography type="subheader2">{column.label}</Typography>
             </FlexCol>
