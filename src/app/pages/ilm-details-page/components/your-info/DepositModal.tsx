@@ -84,7 +84,7 @@ export const DepositModal = ({ id, ...buttonProps }: DepositModalProps) => {
         modalRef.current?.close();
 
         showNotification({
-          txHash,
+          txHash: txHash || "",
           content: (
             <FlexCol className="w-full items-center text-center justify-center">
               <Typography>
@@ -97,6 +97,8 @@ export const DepositModal = ({ id, ...buttonProps }: DepositModalProps) => {
         });
         queryClient.invalidateQueries();
       } catch (e) {
+        console.log("DEPOSIT ERROR--------");
+        console.log({ e });
         modalRef.current?.close();
         showNotification({
           status: "error",
@@ -175,7 +177,7 @@ export const DepositModal = ({ id, ...buttonProps }: DepositModalProps) => {
           <Button
             type="submit"
             loading={isDepositPending}
-            disabled={!isApproved || Number(amount) <= 0}
+            disabled={Number(amount) <= 0}
           >
             {Number(amount) > 0 ? "Deposit" : "Enter an amount"}
           </Button>
