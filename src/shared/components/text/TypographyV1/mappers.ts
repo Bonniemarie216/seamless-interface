@@ -1,4 +1,4 @@
-export type TypographyType =
+export type TypographyTypeV1 =
   | "display1"
   | "h1"
   | "h2"
@@ -75,7 +75,7 @@ export const textColorStyles: { [key in TypographyColor]: string } = {
   dark: "text-text-dark",
 };
 
-export const ComponentMap: { [key in TypographyType]: React.ElementType } = {
+export const ComponentMap: { [key in TypographyTypeV1]: React.ElementType } = {
   display1: "h1",
   h1: "h1",
   h2: "h2",
