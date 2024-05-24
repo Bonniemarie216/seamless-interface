@@ -29,6 +29,7 @@ export default defineConfig(({ mode }) => {
         // "@app-components": path.resolve(__dirname, "src/app/components"),
         "@router": path.resolve(__dirname, "src/app/router"),
         "@meta": path.resolve(__dirname, "src/meta/index"),
+        "@wagmi-wrappers": path.resolve(__dirname, "src/app/wagmi-wrappers/index"),
       },
     },
 

@@ -2,6 +2,8 @@ import { base } from "wagmi/chains";
 import logoSeamless from "@assets/logos/logo-seamless.svg";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { fallback, http, webSocket } from "wagmi";
+import { ReadContractParameters, ReadContractReturnType, readContract } from "wagmi/actions";
+import { Abi, ContractFunctionName, ContractFunctionArgs } from "viem";
 
 const rpcConfig = [
   { url: import.meta.env.VITE_BASE_RPC_FREE_1, isWebSocket: false },
