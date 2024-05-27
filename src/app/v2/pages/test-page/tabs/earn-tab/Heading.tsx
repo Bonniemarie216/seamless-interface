@@ -1,22 +1,18 @@
-import { FlexCol, Typography, FlexRow, useFullTokenData, DisplayMoney, Tooltip } from "@shared";
+import { FlexCol, Typography, FlexRow, DisplayMoney, Tooltip } from "@shared";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
 import { useAssetPickerState } from "../../../../hooks/useAssetPickerState";
 import { useFetchViewAssetPrice } from "../../../../../state/common/queries/useFetchViewAssetPrice";
 import { findILMStrategyByAddress } from "../../../../../state/loop-strategy/config/StrategyConfig";
 import { assetSlugConfig } from "./config/SlugConfig";
-import { AssetApy } from "../../../../components/AssetApy";
+import { AssetApy } from "../../../../components/apy/AssetApy";
 import { AssetTvl } from "../../../../components/AssetTvl";
-import { useFetchViewSupplyIncentives } from "../../../../../state/lending-borrowing/hooks/useFetchViewSupplyIncentives";
-import { IncentivesButton } from "../../../../components/IncentivesButton";
-import { IncentivesDetailCard } from "../../../../components/IncentivesDetailCard";
 import { AssetHeading } from "./AssetHeading";
 import { useFetchViewLendingPoolInfo } from "../../../../../v1/pages/ilm-page/hooks/useFetchViewLendingPoolInfo";
 import { CapRemaining } from "./CapRemaining";
 
 export const Heading = () => {
-  const { asset, isStrategy } = useAssetPickerState({ overrideUrlSlug: assetSlugConfig });
-  const { data: tokenData } = useFullTokenData(asset);
+  const { asset, isStrategy, marketType } = useAssetPickerState({ overrideUrlSlug: assetSlugConfig });
 
   const strategy = findILMStrategyByAddress(asset);
 
@@ -25,8 +21,6 @@ export const Heading = () => {
     isLoading: isOraclePriceLoading,
     isFetched: isOraclePriceFetched,
   } = useFetchViewAssetPrice({ asset });
-
-  const { data: supplyIncentives, ...incentivesRest } = useFetchViewSupplyIncentives(asset);
 
   const { data, ...rest } = useFetchViewLendingPoolInfo();
   // data?.totalMarketSizeUsd
@@ -95,14 +89,7 @@ export const Heading = () => {
                 )}
               </FlexRow>
 
-              <AssetApy asset={asset} isStrategy={isStrategy} typography="bold5" showWarning={false} />
-              {!isStrategy && (
-                <div className="max-w-40 md:max-w-full">
-                  <IncentivesButton {...supplyIncentives} {...incentivesRest}>
-                    <IncentivesDetailCard {...supplyIncentives} assetSymbol={tokenData.symbol} />
-                  </IncentivesButton>
-                </div>
-              )}
+              <AssetApy asset={asset} marketType={marketType} typography="bold5" showWarning={false} />
             </FlexCol>
             <FlexCol className="gap-1 md:text-center">
               <Typography type="regular3">Oracle price</Typography>

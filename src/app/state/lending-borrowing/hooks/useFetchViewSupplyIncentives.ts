@@ -13,10 +13,7 @@ interface SupplyIncentives {
 }
 
 export const useFetchSupplyIncentives = (asset?: Address): FetchData<SupplyIncentives> => {
-  const {
-    data: incentives,
-    ...rawRest
-  } = useFetchRawReservesIncentivesDataByAsset(asset);
+  const { data: incentives, ...rawRest } = useFetchRawReservesIncentivesDataByAsset(asset);
 
   const {
     data: { totalSuppliedUsd },
@@ -36,12 +33,15 @@ export const useFetchSupplyIncentives = (asset?: Address): FetchData<SupplyIncen
     ...mergeQueryStates([seamPriceRest, totalSuppliedRest, rawRest]),
     data: {
       supplyIncentives,
-    }
+    },
   };
 };
 
 export const useFetchViewSupplyIncentives = (asset?: Address): Displayable<ViewIncentives> => {
-  const { data: { supplyIncentives }, ...rest } = useFetchSupplyIncentives(asset);
+  const {
+    data: { supplyIncentives },
+    ...rest
+  } = useFetchSupplyIncentives(asset);
 
   return {
     ...rest,

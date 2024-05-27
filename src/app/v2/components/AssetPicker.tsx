@@ -1,11 +1,12 @@
 import { FlexRow, Typography } from "@shared";
-
 import { AssetCard } from "./AssetCard";
 import { AssetPickerStateHookProps, useAssetPickerState } from "../hooks/useAssetPickerState";
 import { isEqualMarket, useFetchAllMarkets } from "../../state/common/hooks/useFetchAllMarkets";
 
 export const AssetPicker: React.FC<AssetPickerStateHookProps> = ({ overrideUrlSlug }) => {
-  const { asset, isStrategy, setAsset, setIsStrategy } = useAssetPickerState({ overrideUrlSlug });
+  const { asset, marketType, isStrategy, setAsset, setIsStrategy, setMarketType } = useAssetPickerState({
+    overrideUrlSlug,
+  });
 
   const { data: allMarkets } = useFetchAllMarkets();
 
@@ -23,29 +24,37 @@ export const AssetPicker: React.FC<AssetPickerStateHookProps> = ({ overrideUrlSl
           <div
             key={index}
             onClick={() => {
-              const { address, isStrategy: itemStrategy } = item;
+              const { address, isStrategy: itemStrategy, marketType } = item;
               if (
                 isEqualMarket(item, {
                   address: asset,
                   isStrategy,
+                  marketType,
                 })
               ) {
                 setAsset(undefined);
                 setIsStrategy(undefined);
+                setMarketType(undefined);
               } else {
                 setAsset(address);
                 setIsStrategy(String(itemStrategy));
+                setMarketType(marketType);
               }
             }}
           >
-            {item.address ? <AssetCard
-              isSelected={isEqualMarket(item, {
-                address: asset,
-                isStrategy,
-              })}
-              {...item}
-              address={item.address}
-            /> : <span />}
+            {item.address ? (
+              <AssetCard
+                isSelected={isEqualMarket(item, {
+                  address: asset,
+                  isStrategy,
+                  marketType,
+                })}
+                {...item}
+                address={item.address}
+              />
+            ) : (
+              <span />
+            )}
           </div>
         ))}
       </div>

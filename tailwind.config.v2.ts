@@ -56,6 +56,7 @@ export default {
         background: {
           default: "#F3F7FB",
           selected: "#DECFFC",
+          notice: "#FFFFCC",
 
           default1: "#F8F0E5",
           paper: "#FFF",

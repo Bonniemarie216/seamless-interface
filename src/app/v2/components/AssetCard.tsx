@@ -1,15 +1,12 @@
 import { FlexRow, FlexCol, Typography, Icon, useFullTokenData } from "@shared";
 import { Tag } from "../pages/test-page/tabs/earn-tab/Tag";
 import { Address } from "viem";
-import { AssetApy } from "./AssetApy";
-import { TokenDescriptionDict, getTokenTitle } from "../../../shared/state/meta-data-queries/useTokenDescription";
-import { IncentivesButton } from "./IncentivesButton";
-import { useFetchViewSupplyIncentives } from "../../state/lending-borrowing/hooks/useFetchViewSupplyIncentives";
+import { AssetApy } from "./apy/AssetApy";
+import { getSecondaryTitle, getTokenTitle } from "../../../shared/state/meta-data-queries/useTokenDescription";
 import { findILMStrategyByAddress } from "../../state/loop-strategy/config/StrategyConfig";
-import { IncentivesDetailCard } from "./IncentivesDetailCard";
 import { GauntletOptimized } from "./specific-components/GauntletOptimized";
 import { getBaseAssetConfig } from "../../state/lending-borrowing/config/BaseAssetsConfig";
-
+import { MarketType } from "../../state/common/hooks/useFetchAllMarkets";
 
 export interface AssetCardProps {
   address: Address;
@@ -18,18 +15,16 @@ export interface AssetCardProps {
   apy?: string;
   incentivesButton?: React.ReactNode;
   isSelected?: boolean;
+  marketType?: MarketType;
 }
 
-export const AssetCard: React.FC<AssetCardProps> = ({ address, hideBorder, isSelected, isStrategy }) => {
+export const AssetCard: React.FC<AssetCardProps> = ({ address, hideBorder, isSelected, isStrategy, marketType }) => {
   const strategyIcon = isStrategy && findILMStrategyByAddress(address)?.logo;
 
   const {
-    data: { logo: icon, name, symbol },
+    data: { logo: icon, name },
   } = useFullTokenData(address);
   const assetConfig = getBaseAssetConfig(address);
-
-  const { data: supplyIncentives, ...supplyRest } = useFetchViewSupplyIncentives(address);
-
 
   return (
     <div
@@ -41,26 +36,16 @@ export const AssetCard: React.FC<AssetCardProps> = ({ address, hideBorder, isSel
           <Icon width={40} src={strategyIcon || icon} alt={strategyIcon || icon || ""} />
           <FlexCol className="gap-2 max-w-58 text-start">
             <FlexCol className="gap-[2px]">
-              <Typography type="bold3">{getTokenTitle(address, isStrategy)}</Typography>
-              <Typography type="regular1">
-                {isStrategy ? TokenDescriptionDict[address].secondaryStrategyTitle : name}
-              </Typography>
+              <Typography type="bold3">{getTokenTitle(address, marketType)}</Typography>
+              <Typography type="regular1">{getSecondaryTitle(address, name, marketType)}</Typography>
             </FlexCol>
             <FlexRow className="gap-2">
-              <Tag tag={isStrategy ? "ILM" : "LEND"} />
-
+              <Tag marketType={marketType} />
               {assetConfig?.isGauntletOptimized && <GauntletOptimized />}
             </FlexRow>
           </FlexCol>
         </FlexRow>
-        <FlexCol className="gap-1 text-center items-center">
-          <AssetApy asset={address} isStrategy={isStrategy} typography="bold3" />
-          {!isStrategy && (
-            <IncentivesButton {...supplyIncentives} {...supplyRest}>
-              <IncentivesDetailCard {...supplyIncentives} assetSymbol={symbol} />
-            </IncentivesButton>
-          )}
-        </FlexCol>
+        <AssetApy asset={address} marketType={marketType} typography="bold3" />
       </FlexRow>
     </div>
   );

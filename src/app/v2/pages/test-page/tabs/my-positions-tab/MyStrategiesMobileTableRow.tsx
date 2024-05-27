@@ -1,13 +1,13 @@
 import { FlexCol, FlexRow, Icon, Typography, useFullTokenData } from "@shared";
 import { getOverridenName, getTokenTitle } from "../../../../../../shared/state/meta-data-queries/useTokenDescription";
 import { CurrentBalance } from "./CurrentBalance";
-import { IncentivesDetailCard } from "../../../../components/IncentivesDetailCard";
+import { IncentivesDetailCard } from "../../../../components/apy/IncentivesDetailCard";
 import { useFetchViewSupplyIncentives } from "../../../../../state/lending-borrowing/hooks/useFetchViewSupplyIncentives";
 import { findILMStrategyByAddress } from "../../../../../state/loop-strategy/config/StrategyConfig";
-import { AssetApy } from "../../../../components/AssetApy";
+import { AssetApy } from "../../../../components/apy/AssetApy";
 import { Address } from "viem";
 import { Tag } from "../earn-tab/Tag";
-import { IncentivesButton } from "../../../../components/IncentivesButton";
+import { IncentivesButton } from "../../../../components/apy/IncentivesButton";
 import { TableButtonsMobile } from "./TableButtonsMobile";
 
 export const MyStrategiesMobileTableRow: React.FC<{

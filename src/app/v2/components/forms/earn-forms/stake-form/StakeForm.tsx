@@ -10,49 +10,44 @@ import {
   FlexRow,
 } from "../../../../../../shared";
 import { FormButtons } from "./FormButtons";
-import { Summary } from "./Summary";
-import { useMutateSupplyLending } from "../../../../../state/lending-borrowing/mutations/useMutateSupplyLending";
 import { DepositModalFormData } from "../../../../../v1/pages/ilm-details-page/components/your-info/deposit/DepositModal";
 import { Tag } from "../../../../pages/test-page/tabs/earn-tab/Tag";
 import { useFormSettingsContext } from "../../contexts/useFormSettingsContext";
 import { RHFSupplyAmountField } from "./RHFSupplyAmountField";
-import { useFetchReserveTokenAddresses } from "../../../../../state/lending-borrowing/queries/useFetchReserveTokenAddresses";
 import { useFetchViewMaxUserReserveDeposit } from "../../../../../state/lending-borrowing/hooks/useFetchViewMaxReserveDeposit";
-import { WETH_ADDRESS } from "../../../../../../meta";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
-import { RouterConfig } from "../../../../../router";
 import { getTokenTitle } from "../../../../../../shared/state/meta-data-queries/useTokenDescription";
 import { GauntletOptimized } from "../../../specific-components/GauntletOptimized";
 import { getBaseAssetConfig } from "../../../../../state/lending-borrowing/config/BaseAssetsConfig";
 import { MarketType } from "../../../../../state/common/hooks/useFetchAllMarkets";
+import { Summary } from "./Summary";
+import { Notice } from "./Notice";
+import { useMutateStake } from "../../../../../state/staking/mutations/useMutateStake";
+import { useFetchStakedTokenAddress } from "../../../../../state/staking/queries/useFetchStakedTokenAddress";
 
-export const SupplyForm = () => {
+export const StakeForm = () => {
   const { asset, onTransaction, hideTag, overrideUrlSlug, disableAssetPicker } = useFormSettingsContext();
 
   const { data: tokenData } = useFullTokenData(asset);
   const assetConfig = getBaseAssetConfig(asset);
 
-  const { data: reserveTokenAddresses } = useFetchReserveTokenAddresses(asset);
-  const { data: sTokenData } = useToken(reserveTokenAddresses?.aTokenAddress);
+  const { data: stakedTokenAddress } = useFetchStakedTokenAddress(asset);
+  const { data: stakedTokenData } = useToken(stakedTokenAddress);
 
   const methods = useForm({
     defaultValues: {
       amount: "",
     },
   });
-  const { handleSubmit, watch, reset } = methods;
-
-  const amount = watch("amount");
+  const { handleSubmit, reset } = methods;
 
   const { showNotification } = useNotificationContext();
 
-  const { supplyAsync } = useMutateSupplyLending(asset);
+  const { stakeAsync } = useMutateStake(asset);
 
   const maxUserDepositData = useFetchViewMaxUserReserveDeposit(asset);
 
   const onSubmitAsync = async (data: DepositModalFormData) => {
-    await supplyAsync(
+    await stakeAsync(
       {
         amount: data.amount,
       },
@@ -63,14 +58,14 @@ export const SupplyForm = () => {
             content: (
               <FlexCol className="w-full items-center text-center justify-center">
                 <Typography>
-                  You Supplied {data.amount} {tokenData.symbol}
+                  You Staked {data.amount} {tokenData.symbol}
                 </Typography>
-                {sTokenData && (
+                {stakedTokenAddress && (
                   <WatchAssetComponentv2
-                    {...sTokenData}
+                    {...stakedTokenData}
                     logo={tokenData.logo}
-                    symbol={sTokenData.symbol || ""}
-                    address={reserveTokenAddresses.aTokenAddress}
+                    symbol={stakedTokenData.symbol || ""}
+                    address={stakedTokenAddress}
                   />
                 )}
               </FlexCol>
@@ -92,27 +87,17 @@ export const SupplyForm = () => {
           <FlexRow className="justify-between items-start">
             <FlexCol className="gap-1 min-h-14 w-full">
               <Typography type="bold4">
-                {asset ? getTokenTitle(asset, MarketType.Lending) : "Select strategy to get started"}
+                {asset ? getTokenTitle(asset, MarketType.Staking) : "Select strategy to get started"}
               </Typography>
               <Typography type="regular3">{tokenData.name}</Typography>
             </FlexCol>
 
             <FlexRow className="gap-1 items-center">
-              {asset != null && !hideTag && <Tag marketType={MarketType.Lending} />}
+              {asset != null && !hideTag && <Tag marketType={MarketType.Staking} />}
 
               {assetConfig?.isGauntletOptimized && <GauntletOptimized className="pr-4" />}
             </FlexRow>
           </FlexRow>
-          {asset === WETH_ADDRESS && (
-            <FlexRow className="w-full">
-              <Link to={RouterConfig.Routes.supplyEthLegacy} className="flex flex-row items-center justify-end gap-1">
-                <Typography type="bold2" className="text-right">
-                  To supply ETH, click here instead
-                </Typography>
-                <ArrowTopRightOnSquareIcon width={12} />
-              </Link>
-            </FlexRow>
-          )}
           <RHFSupplyAmountField
             overrideUrlSlug={disableAssetPicker ? undefined : overrideUrlSlug}
             assetAddress={disableAssetPicker ? asset : undefined}
@@ -121,7 +106,8 @@ export const SupplyForm = () => {
           />
         </FlexCol>
 
-        {asset && <Summary amount={amount} />}
+        {asset && <Summary />}
+        {asset && <Notice />}
         {asset && <FormButtons />}
       </FlexCol>
     </MyFormProvider>

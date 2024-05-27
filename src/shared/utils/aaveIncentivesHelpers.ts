@@ -30,7 +30,7 @@ export interface Incentives {
   vIncentiveData: IncentiveData;
 }
 
-interface RewardToken {
+export interface RewardToken {
   symbol: string;
   logo: string;
   apr: ViewNumber;
@@ -93,9 +93,9 @@ export function parseIncentives(incentives: IncentiveData, totalUsd: bigint, sea
   const result = incentives
     ? parseRewardsTokenInformation(incentives.rewardsTokenInformation, totalUsd, seamPrice)
     : {
-      totalApr: 0,
-      rewardTokens: [],
-    };
+        totalApr: 0,
+        rewardTokens: [],
+      };
 
   return result;
 }

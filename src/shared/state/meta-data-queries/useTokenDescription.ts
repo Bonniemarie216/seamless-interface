@@ -11,6 +11,7 @@ import {
   WETH_ADDRESS,
   WSTETH_ADDRESS,
 } from "@meta";
+import { MarketType } from "../../../app/state/common/hooks/useFetchAllMarkets";
 
 export interface FullTokenData {
   description?: string;
@@ -23,6 +24,8 @@ interface ITokenDescriptionDict {
     strategyDescription?: string;
     description: string;
     secondaryStrategyTitle?: string;
+    stakingTitle?: string;
+    secondaryStakingTitle?: string;
   };
 }
 
@@ -68,6 +71,9 @@ export const TokenDescriptionDict: ITokenDescriptionDict = {
     lendingTitle: "Supply SEAM",
     strategyTitle: "Multiply SEAM staking rewards",
     description: "SEAM is the fair launch utility governance token of Seamless Protocol.",
+    stakingTitle: "Convert SEAM into esSEAM",
+    secondaryStakingTitle:
+      "Lock your SEAM into escrowed SEAM for additional rewards. esSEAM unlocks back into SEAM linearly over 12 months",
   },
   [DEGEN_ADDRESS]: {
     lendingTitle: "Supply DEGEN",
@@ -92,8 +98,30 @@ export const getTokenDescription = (token: Address | undefined, isStrategy: bool
   return isStrategy ? TokenDescriptionDict[token]?.strategyDescription : TokenDescriptionDict[token]?.description;
 };
 
-export const getTokenTitle = (token: Address, isStrategy?: boolean): string | undefined => {
-  return isStrategy ? TokenDescriptionDict[token]?.strategyTitle : TokenDescriptionDict[token]?.lendingTitle;
+export const getTokenTitle = (token: Address, marketType?: MarketType): string | undefined => {
+  const dictElem = TokenDescriptionDict[token];
+
+  switch (marketType) {
+    case MarketType.Lending:
+      return dictElem?.lendingTitle;
+    case MarketType.Strategy:
+      return dictElem?.strategyTitle;
+    case MarketType.Staking:
+      return dictElem?.stakingTitle;
+  }
+};
+
+export const getSecondaryTitle = (token: Address, tokenName?: string, marketType?: MarketType): string | undefined => {
+  const dictElem = TokenDescriptionDict[token];
+
+  switch (marketType) {
+    case MarketType.Lending:
+      return tokenName;
+    case MarketType.Strategy:
+      return dictElem?.secondaryStrategyTitle;
+    case MarketType.Staking:
+      return dictElem?.secondaryStakingTitle;
+  }
 };
 
 export const getOverridenName = (token: Address, name?: string, isStrategy?: boolean) => {

@@ -6,6 +6,7 @@ import { react } from "@wagmi/cli/plugins";
 import { UIIncentiveDataProviderAbi } from "./abis/UIIncentiveDataProvider";
 import { ProtocolDataProviderAbi } from "./abis/ProtocolDataProvider";
 import { PoolDataProviderAbi } from "./abis/PoolDataProvider";
+import { StakingManagerAbi } from "./abis/StakingManager";
 
 export default defineConfig({
   out: "src/app/generated/generated.ts",
@@ -38,6 +39,11 @@ export default defineConfig({
       name: "PoolDataProvider",
       address: "0xB7397f841a449793c634C06Cf12751d256b9bf50",
       abi: PoolDataProviderAbi,
+    },
+    {
+      name: "StakingManager",
+      address: "0x78a5F87c28a9f5eb5Cc53742e0bce41cBe48fF9A",
+      abi: StakingManagerAbi,
     },
   ],
   plugins: [react()],

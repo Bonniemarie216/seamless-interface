@@ -4,6 +4,8 @@ import { DisplayMoney, DisplayTokenAmount, FlexCol, Tooltip, Typography } from "
 import { useFetchViewDetailUserEquity } from "../../../../../state/loop-strategy/hooks/useFetchViewDetailUserEquity";
 import { useFetchViewAssetBalance } from "../../../../../state/common/queries/useFetchViewAssetBalance";
 import { walletBalanceDecimalsOptionsTemp } from "../../../../../../meta";
+import { useFetchViewDetailUserStakedBalance } from "../../../../../state/staking/hooks/useFetchViewDetailUserStakedBalance";
+import { MarketType } from "../../../../../state/common/hooks/useFetchAllMarkets";
 
 const CurrentBalanceStrategy: React.FC<{ asset: Address }> = ({ asset }) => {
   const {
@@ -61,13 +63,13 @@ const CurrentBalanceLending: React.FC<{ asset: Address }> = ({ asset }) => {
   return (
     <FlexCol>
       <DisplayTokenAmount
-        {...supplied.tokenAmount}
+        {...supplied?.tokenAmount}
         isLoading={isUserReservesDataLoading}
         isFetched={isUserReservesDataFetched}
         typography="bold3"
       />
       <DisplayMoney
-        {...supplied.dollarAmount}
+        {...supplied?.dollarAmount}
         isLoading={isUserReservesDataLoading}
         isFetched={isUserReservesDataFetched}
       />
@@ -75,6 +77,40 @@ const CurrentBalanceLending: React.FC<{ asset: Address }> = ({ asset }) => {
   );
 };
 
-export const CurrentBalance: React.FC<{ asset: Address; isStrategy: boolean }> = ({ asset, isStrategy }) => {
-  return isStrategy ? <CurrentBalanceStrategy asset={asset} /> : <CurrentBalanceLending asset={asset} />;
+const CurrentBalanceStaking: React.FC<{ asset?: Address }> = ({ asset }) => {
+  const {
+    data,
+    isLoading: isUserReservesDataLoading,
+    isFetched: isUserReservesDataFetched,
+  } = useFetchViewDetailUserStakedBalance(asset);
+
+  return (
+    <FlexCol>
+      <DisplayTokenAmount
+        {...data?.tokenAmount}
+        isLoading={isUserReservesDataLoading}
+        isFetched={isUserReservesDataFetched}
+        typography="bold3"
+      />
+      <DisplayMoney
+        {...data?.dollarAmount}
+        isLoading={isUserReservesDataLoading}
+        isFetched={isUserReservesDataFetched}
+      />
+    </FlexCol>
+  );
+};
+
+export const CurrentBalance: React.FC<{ asset: Address; marketType: MarketType }> = ({ asset, marketType }) => {
+  if (marketType == MarketType.Lending) {
+    return <CurrentBalanceLending asset={asset} />;
+  }
+
+  if (marketType == MarketType.Strategy) {
+    return <CurrentBalanceStrategy asset={asset} />;
+  }
+
+  if (marketType == MarketType.Staking) {
+    return <CurrentBalanceStaking asset={asset} />;
+  }
 };

@@ -27,6 +27,7 @@ import { RouterConfig } from "../../../../../router";
 import { useFetchViewMaxUserDeposit } from "../../../../../state/loop-strategy/hooks/useFetchViewMaxUserDeposit";
 import { getTokenTitle, getOverridenName } from "../../../../../../shared/state/meta-data-queries/useTokenDescription";
 import { useFetchViewTargetMultiple } from "../../../../../state/loop-strategy/hooks/useFetchViewTargetMultiple";
+import { MarketType } from "../../../../../state/common/hooks/useFetchAllMarkets";
 
 export const StrategyForm = () => {
   const { asset, isStrategy } = useFormSettingsContext();
@@ -45,10 +46,7 @@ export const StrategyForm = () => {
 const StrategyFormLocal: React.FC<{
   strategy: StrategyConfig;
 }> = ({ strategy }) => {
-  const {
-    data: targetMultipleData,
-    ...restTargetMultiple
-  } = useFetchViewTargetMultiple(strategy.address);
+  const { data: targetMultipleData, ...restTargetMultiple } = useFetchViewTargetMultiple(strategy.address);
 
   const { asset, onTransaction, hideTag, disableAssetPicker, overrideUrlSlug } = useFormSettingsContext();
   const methods = useForm({
@@ -112,16 +110,21 @@ const StrategyFormLocal: React.FC<{
           <FlexRow className="justify-between items-start">
             <FlexCol className="gap-1 min-h-14">
               <Typography type="bold4">
-                {asset ? getTokenTitle(asset, true) : "Select strategy to get started"}
+                {asset ? getTokenTitle(asset, MarketType.Strategy) : "Select strategy to get started"}
               </Typography>
               <Typography type="regular3">{asset ? getOverridenName(asset, undefined, true) : ""}</Typography>
             </FlexCol>
 
-            {asset != null && !hideTag && <Tag tag="ILM" />}
+            {asset != null && !hideTag && <Tag marketType={MarketType.Strategy} />}
           </FlexRow>
           {asset === WETH_ADDRESS && (
             <FlexRow className="w-full">
-              <Link to={RouterConfig.Routes.wrapEth} className="flex flex-row items-center justify-end gap-1" target="_blank" rel="noopener noreferrer">
+              <Link
+                to={RouterConfig.Routes.wrapEth}
+                className="flex flex-row items-center justify-end gap-1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Typography type="bold2" className="text-right">
                   To wrap ETH, click here
                 </Typography>
@@ -140,11 +143,7 @@ const StrategyFormLocal: React.FC<{
         <FlexCol className="gap-4">
           <FlexRow className="justify-between pr-2">
             <Typography type="bold3">Target Multiple</Typography>
-            <DisplayTargetMultiple
-              typography="bold3"
-              {...restTargetMultiple}
-              {...targetMultipleData}
-            />
+            <DisplayTargetMultiple typography="bold3" {...restTargetMultiple} {...targetMultipleData} />
           </FlexRow>
           {/* <FlexCol>
             <RHFInputSliderField name="test" min="0" max="2" enabledMax={0} />

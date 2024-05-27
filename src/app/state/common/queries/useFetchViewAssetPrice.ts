@@ -2,12 +2,12 @@ import { ilmStrategies } from "../../loop-strategy/config/StrategyConfig";
 import { readContract } from "wagmi/actions";
 import { aaveOracleAbi, aaveOracleAddress, loopStrategyAbi } from "../../../generated";
 import { Address, erc20Abi } from "viem";
-import { ONE_ETHER, ONE_USD } from "@meta";
+import { ESSEAM_ADDRESS, ONE_ETHER, ONE_USD, SEAM_ADDRESS } from "@meta";
 import { Config, useConfig } from "wagmi";
 import { FetchBigInt } from "../../../../shared/types/Fetch";
 import { formatFetchBigIntToViewBigInt } from "../../../../shared/utils/helpers";
 import { Displayable, ViewBigInt } from "../../../../shared";
-import { useFetchCoinGeckoPriceByAddress } from "../hooks/useFetchCoinGeckoPrice";
+import { fetchCoinGeckoAssetPriceByAddress, useFetchCoinGeckoPriceByAddress } from "../hooks/useFetchCoinGeckoPrice";
 import { useQuery } from "@tanstack/react-query";
 import { getBaseAssetConfig } from "../../lending-borrowing/config/BaseAssetsConfig";
 
@@ -15,13 +15,17 @@ export interface AssetPrice {
   price: FetchBigInt;
 }
 
-const fetchAssetPriceInBlock = async (
+export const fetchAssetPriceInBlock = async (
   config: Config,
   asset?: Address,
   blockNumber?: bigint,
   underlyingAsset?: Address
 ): Promise<bigint | undefined> => {
   if (!asset) return undefined;
+
+  if (asset == SEAM_ADDRESS || asset == ESSEAM_ADDRESS) {
+    return fetchCoinGeckoAssetPriceByAddress({ address: SEAM_ADDRESS, precision: 8 });
+  }
 
   const strategy = ilmStrategies.find((strategy) => strategy.address === asset);
 

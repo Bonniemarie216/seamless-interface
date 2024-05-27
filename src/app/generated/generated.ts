@@ -4042,6 +4042,570 @@ export const protocolDataProviderConfig = {
 } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// StakingManager
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const stakingManagerAbi = [
+  { type: 'constructor', inputs: [], stateMutability: 'nonpayable' },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'REWARD_PER_STAKED_TOKEN_BASE',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'UPGRADE_INTERFACE_VERSION',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'recipient', internalType: 'address', type: 'address' },
+    ],
+    name: 'claimRewards',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'rewardToken', internalType: 'address', type: 'address' },
+      { name: 'recipient', internalType: 'address', type: 'address' },
+    ],
+    name: 'claimRewardsForToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'rewardToken', internalType: 'address', type: 'address' },
+      {
+        name: 'config',
+        internalType: 'struct RewardTokenConfig',
+        type: 'tuple',
+        components: [
+          { name: 'startTimestamp', internalType: 'uint256', type: 'uint256' },
+          { name: 'endTimestamp', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'emissionPerSecond',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    name: 'configureRewardToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getEsSeam',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'rewardToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getRewardTokenConfig',
+    outputs: [
+      {
+        name: 'rewardTokenConfig',
+        internalType: 'struct RewardTokenConfig',
+        type: 'tuple',
+        components: [
+          { name: 'startTimestamp', internalType: 'uint256', type: 'uint256' },
+          { name: 'endTimestamp', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'emissionPerSecond',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'rewardToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getRewardTokenData',
+    outputs: [
+      {
+        name: 'rewardTokenData',
+        internalType: 'struct RewardTokenData',
+        type: 'tuple',
+        components: [
+          {
+            name: 'rewardPerStakedToken',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+          {
+            name: 'lastUpdatedTimestamp',
+            internalType: 'uint256',
+            type: 'uint256',
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getRewardTokens',
+    outputs: [{ name: '', internalType: 'address[]', type: 'address[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getSeam',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getStakedToken',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getStakedTokenImplementation',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getStakingTokens',
+    outputs: [{ name: '', internalType: 'address[]', type: 'address[]' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getTotalStaked',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'rewardToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getUserAccruedRewardsForToken',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getUserStakedBalance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'user', internalType: 'address', type: 'address' },
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'rewardToken', internalType: 'address', type: 'address' },
+    ],
+    name: 'getUserTotalRewardsForToken',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'seam', internalType: 'address', type: 'address' },
+      { name: 'esSeam', internalType: 'address', type: 'address' },
+      { name: 'initialOwner', internalType: 'address', type: 'address' },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'asset', internalType: 'address', type: 'address' }],
+    name: 'isStakingStarted',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'proxiableUUID',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'implementation', internalType: 'address', type: 'address' },
+    ],
+    name: 'setStakedTokenImplementation',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'recipient', internalType: 'address', type: 'address' },
+    ],
+    name: 'stake',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'asset', internalType: 'address', type: 'address' }],
+    name: 'startStaking',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'recipient', internalType: 'address', type: 'address' },
+    ],
+    name: 'unstake',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: 'recipient', internalType: 'address', type: 'address' },
+    ],
+    name: 'unstakeAndClaim',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'stakingToken', internalType: 'address', type: 'address' },
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'recipient', internalType: 'address', type: 'address' },
+      { name: 'value', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'updateHook',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'newImplementation', internalType: 'address', type: 'address' },
+      { name: 'data', internalType: 'bytes', type: 'bytes' },
+    ],
+    name: 'upgradeToAndCall',
+    outputs: [],
+    stateMutability: 'payable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'recipient',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'stakingToken',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'rewardToken',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+    ],
+    name: 'ClaimRewardsForToken',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'stakingToken',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'rewardToken',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'startTimestamp',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'endTimestamp',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'emissionPerSecond',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'ConfigureRewardToken',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'version',
+        internalType: 'uint64',
+        type: 'uint64',
+        indexed: false,
+      },
+    ],
+    name: 'Initialized',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'implementation',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'SetStakedTokenImplementation',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'stakingToken',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'recipient',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Stake',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'asset',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'StartStaking',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'stakingToken',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'from', internalType: 'address', type: 'address', indexed: true },
+      {
+        name: 'recipient',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Unstake',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'implementation',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'Upgraded',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
+    name: 'AddressEmptyCode',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'AddressInsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'implementation', internalType: 'address', type: 'address' },
+    ],
+    name: 'ERC1967InvalidImplementation',
+  },
+  { type: 'error', inputs: [], name: 'ERC1967NonPayable' },
+  { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidInitialization' },
+  { type: 'error', inputs: [], name: 'MathOverflowedMulDiv' },
+  { type: 'error', inputs: [], name: 'NotInitializing' },
+  { type: 'error', inputs: [], name: 'NotStakedToken' },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
+    name: 'SafeERC20FailedOperation',
+  },
+  { type: 'error', inputs: [], name: 'StakingAlreadyStarted' },
+  { type: 'error', inputs: [], name: 'StakingNotStarted' },
+  { type: 'error', inputs: [], name: 'UUPSUnauthorizedCallContext' },
+  {
+    type: 'error',
+    inputs: [{ name: 'slot', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'UUPSUnsupportedProxiableUUID',
+  },
+] as const
+
+export const stakingManagerAddress =
+  '0x78a5F87c28a9f5eb5Cc53742e0bce41cBe48fF9A' as const
+
+export const stakingManagerConfig = {
+  address: stakingManagerAddress,
+  abi: stakingManagerAbi,
+} as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // React
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -6411,4 +6975,559 @@ export const useReadProtocolDataProviderGetUserReserveData =
     abi: protocolDataProviderAbi,
     address: protocolDataProviderAddress,
     functionName: 'getUserReserveData',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__
+ */
+export const useReadStakingManager = /*#__PURE__*/ createUseReadContract({
+  abi: stakingManagerAbi,
+  address: stakingManagerAddress,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"REWARD_PER_STAKED_TOKEN_BASE"`
+ */
+export const useReadStakingManagerRewardPerStakedTokenBase =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'REWARD_PER_STAKED_TOKEN_BASE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"UPGRADE_INTERFACE_VERSION"`
+ */
+export const useReadStakingManagerUpgradeInterfaceVersion =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'UPGRADE_INTERFACE_VERSION',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getEsSeam"`
+ */
+export const useReadStakingManagerGetEsSeam =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getEsSeam',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getRewardTokenConfig"`
+ */
+export const useReadStakingManagerGetRewardTokenConfig =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getRewardTokenConfig',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getRewardTokenData"`
+ */
+export const useReadStakingManagerGetRewardTokenData =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getRewardTokenData',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getRewardTokens"`
+ */
+export const useReadStakingManagerGetRewardTokens =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getRewardTokens',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getSeam"`
+ */
+export const useReadStakingManagerGetSeam = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getSeam',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getStakedToken"`
+ */
+export const useReadStakingManagerGetStakedToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getStakedToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getStakedTokenImplementation"`
+ */
+export const useReadStakingManagerGetStakedTokenImplementation =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getStakedTokenImplementation',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getStakingTokens"`
+ */
+export const useReadStakingManagerGetStakingTokens =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getStakingTokens',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getTotalStaked"`
+ */
+export const useReadStakingManagerGetTotalStaked =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getTotalStaked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getUserAccruedRewardsForToken"`
+ */
+export const useReadStakingManagerGetUserAccruedRewardsForToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getUserAccruedRewardsForToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getUserStakedBalance"`
+ */
+export const useReadStakingManagerGetUserStakedBalance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getUserStakedBalance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"getUserTotalRewardsForToken"`
+ */
+export const useReadStakingManagerGetUserTotalRewardsForToken =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'getUserTotalRewardsForToken',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"isStakingStarted"`
+ */
+export const useReadStakingManagerIsStakingStarted =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'isStakingStarted',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"owner"`
+ */
+export const useReadStakingManagerOwner = /*#__PURE__*/ createUseReadContract({
+  abi: stakingManagerAbi,
+  address: stakingManagerAddress,
+  functionName: 'owner',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"proxiableUUID"`
+ */
+export const useReadStakingManagerProxiableUuid =
+  /*#__PURE__*/ createUseReadContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'proxiableUUID',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__
+ */
+export const useWriteStakingManager = /*#__PURE__*/ createUseWriteContract({
+  abi: stakingManagerAbi,
+  address: stakingManagerAddress,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"claimRewards"`
+ */
+export const useWriteStakingManagerClaimRewards =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'claimRewards',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"claimRewardsForToken"`
+ */
+export const useWriteStakingManagerClaimRewardsForToken =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'claimRewardsForToken',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"configureRewardToken"`
+ */
+export const useWriteStakingManagerConfigureRewardToken =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'configureRewardToken',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteStakingManagerInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useWriteStakingManagerRenounceOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"setStakedTokenImplementation"`
+ */
+export const useWriteStakingManagerSetStakedTokenImplementation =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'setStakedTokenImplementation',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"stake"`
+ */
+export const useWriteStakingManagerStake = /*#__PURE__*/ createUseWriteContract(
+  {
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'stake',
+  },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"startStaking"`
+ */
+export const useWriteStakingManagerStartStaking =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'startStaking',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useWriteStakingManagerTransferOwnership =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"unstake"`
+ */
+export const useWriteStakingManagerUnstake =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'unstake',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"unstakeAndClaim"`
+ */
+export const useWriteStakingManagerUnstakeAndClaim =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'unstakeAndClaim',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"updateHook"`
+ */
+export const useWriteStakingManagerUpdateHook =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'updateHook',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ */
+export const useWriteStakingManagerUpgradeToAndCall =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__
+ */
+export const useSimulateStakingManager =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"claimRewards"`
+ */
+export const useSimulateStakingManagerClaimRewards =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'claimRewards',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"claimRewardsForToken"`
+ */
+export const useSimulateStakingManagerClaimRewardsForToken =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'claimRewardsForToken',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"configureRewardToken"`
+ */
+export const useSimulateStakingManagerConfigureRewardToken =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'configureRewardToken',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateStakingManagerInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"renounceOwnership"`
+ */
+export const useSimulateStakingManagerRenounceOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'renounceOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"setStakedTokenImplementation"`
+ */
+export const useSimulateStakingManagerSetStakedTokenImplementation =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'setStakedTokenImplementation',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"stake"`
+ */
+export const useSimulateStakingManagerStake =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'stake',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"startStaking"`
+ */
+export const useSimulateStakingManagerStartStaking =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'startStaking',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"transferOwnership"`
+ */
+export const useSimulateStakingManagerTransferOwnership =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'transferOwnership',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"unstake"`
+ */
+export const useSimulateStakingManagerUnstake =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'unstake',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"unstakeAndClaim"`
+ */
+export const useSimulateStakingManagerUnstakeAndClaim =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'unstakeAndClaim',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"updateHook"`
+ */
+export const useSimulateStakingManagerUpdateHook =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'updateHook',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link stakingManagerAbi}__ and `functionName` set to `"upgradeToAndCall"`
+ */
+export const useSimulateStakingManagerUpgradeToAndCall =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    functionName: 'upgradeToAndCall',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__
+ */
+export const useWatchStakingManagerEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"ClaimRewardsForToken"`
+ */
+export const useWatchStakingManagerClaimRewardsForTokenEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'ClaimRewardsForToken',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"ConfigureRewardToken"`
+ */
+export const useWatchStakingManagerConfigureRewardTokenEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'ConfigureRewardToken',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"Initialized"`
+ */
+export const useWatchStakingManagerInitializedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'Initialized',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"OwnershipTransferred"`
+ */
+export const useWatchStakingManagerOwnershipTransferredEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'OwnershipTransferred',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"SetStakedTokenImplementation"`
+ */
+export const useWatchStakingManagerSetStakedTokenImplementationEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'SetStakedTokenImplementation',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"Stake"`
+ */
+export const useWatchStakingManagerStakeEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'Stake',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"StartStaking"`
+ */
+export const useWatchStakingManagerStartStakingEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'StartStaking',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"Unstake"`
+ */
+export const useWatchStakingManagerUnstakeEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'Unstake',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link stakingManagerAbi}__ and `eventName` set to `"Upgraded"`
+ */
+export const useWatchStakingManagerUpgradedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: stakingManagerAbi,
+    address: stakingManagerAddress,
+    eventName: 'Upgraded',
   })

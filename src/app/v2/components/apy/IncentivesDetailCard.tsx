@@ -1,5 +1,5 @@
 import { DisplayPercentage, FlexCol, FlexRow, Typography, ViewNumber } from "@shared";
-import { ViewRewardToken } from "../../v1/pages/ilm-page/hooks/useFetchViewBaseAsset";
+import { ViewRewardToken } from "../../../v1/pages/ilm-page/hooks/useFetchViewBaseAsset";
 
 interface IncentivesDetailCardProps {
   assetSymbol?: string;

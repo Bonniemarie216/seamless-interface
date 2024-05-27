@@ -1,7 +1,7 @@
 import { DisplayNumber, FlexCol, FlexRow, Typography } from "@shared";
 
-import { LendingApy } from "../../../AssetApy";
-import { AssetApr } from "../../../AssetApr";
+import { LendingApy } from "../../../apy/AssetApy";
+import { AssetApr } from "../../../apy/AssetApr";
 import { useFormSettingsContext } from "../../contexts/useFormSettingsContext";
 import { DataRow } from "../../DataRow";
 import { useFetchViewUserAccountData } from "../../../../../state/lending-borrowing/queries/useFetchViewUserAccountData";
@@ -10,6 +10,7 @@ import {
   useFetchViewHealthFactorAfterAction,
 } from "../../../../../state/lending-borrowing/hooks/useFetchViewHealthFactorAfterAction";
 import { useAccount } from "wagmi";
+import { MarketType } from "../../../../../state/common/hooks/useFetchAllMarkets";
 
 export const Summary = ({ amount }: { amount: string }) => {
   const account = useAccount();
@@ -33,7 +34,9 @@ export const Summary = ({ amount }: { amount: string }) => {
       </FlexRow>
       <FlexRow className="text-navy-600 justify-between">
         <Typography type="bold2">Rewards APR</Typography>
-        {asset && <AssetApr asset={asset} className="text-navy-1000" typography="medium2" />}
+        {asset && (
+          <AssetApr asset={asset} marketType={MarketType.Lending} className="text-navy-1000" typography="medium2" />
+        )}
       </FlexRow>
       {account.address && asset && userAccountData?.totalDebt?.bigIntValue !== 0n && (
         <>
