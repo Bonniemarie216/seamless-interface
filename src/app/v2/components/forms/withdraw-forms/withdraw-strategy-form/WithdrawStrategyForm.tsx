@@ -30,6 +30,7 @@ import { RouterConfig } from "../../../../../router";
 import { RHFWithdrawStrategyAmountField } from "./RHFWithdrawStrategyAmountField";
 import { useFormSettingsContext } from "../../contexts/useFormSettingsContext";
 import { useFetchStrategyAsset } from "../../../../../state/loop-strategy/metadataQueries/useFetchStrategyAsset";
+import { MarketType } from "../../../../../state/common/hooks/useFetchAllMarkets";
 
 export const WithdrawStrategyForm = () => {
   const { asset, isStrategy } = useFormSettingsContext();
@@ -163,7 +164,7 @@ const WithdrawStrategyLocal: React.FC<{
               <Typography type="regular3">{tokenData.name}</Typography>
             </FlexCol>
 
-            {asset != null && !hideTag && <Tag tag="ILM" />}
+            {asset != null && !hideTag && <Tag marketType={MarketType.Strategy} />}
           </FlexRow>
           <RHFWithdrawStrategyAmountField
             overrideUrlSlug={disableAssetPicker ? undefined : overrideUrlSlug}

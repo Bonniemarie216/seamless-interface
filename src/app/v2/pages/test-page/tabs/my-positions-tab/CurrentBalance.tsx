@@ -101,16 +101,18 @@ const CurrentBalanceStaking: React.FC<{ asset?: Address }> = ({ asset }) => {
   );
 };
 
-export const CurrentBalance: React.FC<{ asset: Address; marketType: MarketType }> = ({ asset, marketType }) => {
-  if (marketType == MarketType.Lending) {
-    return <CurrentBalanceLending asset={asset} />;
-  }
-
-  if (marketType == MarketType.Strategy) {
-    return <CurrentBalanceStrategy asset={asset} />;
-  }
-
-  if (marketType == MarketType.Staking) {
-    return <CurrentBalanceStaking asset={asset} />;
+export const CurrentBalance: React.FC<{ asset: Address; marketType: MarketType | undefined }> = ({
+  asset,
+  marketType,
+}) => {
+  switch (marketType) {
+    case MarketType.Lending:
+      return <CurrentBalanceLending asset={asset} />;
+    case MarketType.Strategy:
+      return <CurrentBalanceStrategy asset={asset} />;
+    case MarketType.Staking:
+      return <CurrentBalanceStaking asset={asset} />;
+    default:
+      return null;
   }
 };

@@ -19,6 +19,7 @@ import { Summary } from "./Summary";
 import { useMutateWithdrawLending } from "../../../../../state/lending-borrowing/mutations/useMutateWithdrawLending";
 import { RHFWithdrawAmountField } from "./RHFWithdrawAmountField";
 import { useFormSettingsContext } from "../../contexts/useFormSettingsContext";
+import { MarketType } from "../../../../../state/common/hooks/useFetchAllMarkets";
 
 export const WithdrawForm = () => {
   const { asset, onTransaction, hideTag, disableAssetPicker, overrideUrlSlug } = useFormSettingsContext();
@@ -95,7 +96,7 @@ export const WithdrawForm = () => {
               <Typography type="regular3">{tokenData.name}</Typography>
             </FlexCol>
 
-            {asset != null && !hideTag && <Tag tag="ILM" />}
+            {asset != null && !hideTag && <Tag marketType={MarketType.Strategy} />}
           </FlexRow>
           <RHFWithdrawAmountField
             overrideUrlSlug={disableAssetPicker ? undefined : overrideUrlSlug}

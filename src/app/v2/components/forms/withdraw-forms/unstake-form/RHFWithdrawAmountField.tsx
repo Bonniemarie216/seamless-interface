@@ -53,7 +53,7 @@ type IProps<T> = Omit<IRHFAmountInputProps, "assetPrice" | "walletBalance" | "as
  */
 
 export function RHFWithdrawAmountField<T>({ overrideUrlSlug, assetAddress, ...other }: IProps<T>) {
-  const receiveAsset = assetAddress == SEAM_ADDRESS ? ESSEAM_ADDRESS : assetAddress;
+  const receiveAsset = assetAddress === SEAM_ADDRESS ? ESSEAM_ADDRESS : assetAddress;
 
   // *** warning *** //
   if (!overrideUrlSlug && !assetAddress) {

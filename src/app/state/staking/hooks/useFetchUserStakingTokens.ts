@@ -13,7 +13,9 @@ const fetchUserStakingTokensBalances = async (
 ): Promise<Address[]> => {
   const stakingTokens: Address[] = [];
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const stakingToken of allStakingTokens) {
+    // eslint-disable-next-line no-await-in-loop
     const balance = await readContract(config, {
       address: stakingManagerAddress,
       abi: stakingManagerAbi,

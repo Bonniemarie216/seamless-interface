@@ -40,7 +40,9 @@ const fetchStakingApr = async (
   let totalApr = 0;
   const rewardTokensApr: RewardTokenApr[] = [];
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const rewardTokenEmission of rewardTokensEmissions) {
+    // eslint-disable-next-line no-await-in-loop
     const rewardTokenPrice = await fetchAssetPriceInBlock(config, rewardTokenEmission.rewardToken.address);
 
     if (!rewardTokenPrice) {

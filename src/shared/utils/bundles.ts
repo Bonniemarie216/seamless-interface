@@ -72,10 +72,16 @@ export async function simulateDeposit(
 
     // Take logs from second transaction
     const { logs } = result[1];
-    // Deposit even is the last event
-    const depositEvent = logs[logs?.length - 1];
+    if (!logs || logs.length < 1) {
+      return {
+        isSuccess: false,
+        sharesToReceive: 0n,
+      };
+    }
 
-    if (!depositEvent) {
+    // Deposit even is the last event
+    const depositEvent = logs[logs.length - 1];
+    if (!depositEvent || depositEvent.topics.length < 3) {
       return {
         isSuccess: false,
         sharesToReceive: 0n,
@@ -122,10 +128,16 @@ export async function simulateWithdraw(account: Address, strategy: Address, amou
     }
 
     const { logs } = result[0];
-    // Withdraw event is the last event
-    const withdrawEvent = logs[logs?.length - 1];
+    if (!logs || logs.length === 0) {
+      return {
+        isSuccess: false,
+        assetsToReceive: 0n,
+      };
+    }
 
-    if (!withdrawEvent) {
+    // Withdraw event is the last event
+    const withdrawEvent = logs[logs.length - 1];
+    if (!withdrawEvent || withdrawEvent.topics.length < 4) {
       return {
         isSuccess: false,
         assetsToReceive: 0n,

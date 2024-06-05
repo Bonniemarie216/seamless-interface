@@ -66,7 +66,7 @@ export const LendingApy: React.FC<LandingApyProps> = ({ asset, ...rest }) => {
 };
 
 export const AssetApy: React.FC<AssetApyProps> = ({ asset, marketType, ...rest }) => {
-  if (marketType == MarketType.Lending) {
+  if (marketType === MarketType.Lending) {
     return (
       <FlexCol className="gap-1 text-center items-center">
         <LendingApy asset={asset} {...rest} />
@@ -75,15 +75,13 @@ export const AssetApy: React.FC<AssetApyProps> = ({ asset, marketType, ...rest }
     );
   }
 
-  if (marketType == MarketType.Strategy) {
+  if (marketType === MarketType.Strategy) {
     return <StrategyApy asset={asset} {...rest} />;
   }
 
-  if (marketType == MarketType.Staking) {
-    return (
-      <FlexCol className="gap-1 text-center items-center">
-        <IncentivesButton asset={asset} marketType={marketType} />
-      </FlexCol>
-    );
+  if (marketType === MarketType.Staking) {
+    return <IncentivesButton asset={asset} marketType={marketType} />;
   }
+
+  return null;
 };

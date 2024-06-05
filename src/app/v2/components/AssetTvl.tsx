@@ -50,5 +50,7 @@ export const AssetTvl: React.FC<AssetTvlProps> = ({ asset, marketType, ...rest }
       return <LendingTvl asset={asset} {...rest} />;
     case MarketType.Staking:
       return <StakingTvl asset={asset} {...rest} />;
+    default:
+      return null;
   }
 };

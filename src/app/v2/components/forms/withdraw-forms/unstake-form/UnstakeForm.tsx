@@ -21,7 +21,7 @@ import { Notice } from "./Notice";
 
 export const UnstakeForm = () => {
   const { asset, onTransaction, hideTag, disableAssetPicker, overrideUrlSlug } = useFormSettingsContext();
-  const receiveToken = asset == SEAM_ADDRESS ? ESSEAM_ADDRESS : asset;
+  const receiveToken = asset === SEAM_ADDRESS ? ESSEAM_ADDRESS : asset;
 
   const { data: tokenData } = useFullTokenData(receiveToken);
 

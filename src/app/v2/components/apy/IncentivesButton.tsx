@@ -8,7 +8,7 @@ import { useFetchStakingApr } from "../../../state/staking/hooks/useFetchViewSta
 import { WETH_ADDRESS } from "../../../../meta";
 
 interface IncentivesButtonProps {
-  asset: Address;
+  asset: Address | undefined;
   marketType?: MarketType;
   totalApr?: ViewNumber;
   rewardTokens?: ViewRewardToken[];

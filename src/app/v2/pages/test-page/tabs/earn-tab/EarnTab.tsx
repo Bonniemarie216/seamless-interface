@@ -21,9 +21,9 @@ export const EarnTab = () => {
         <div className="flex-1 sticky top-0 h-screen overflow-auto pt-6">
           <div className="bg-white shadow-card px-8 rounded-card py-6">
             <FormSettingsProvider defaultAsset={asset} overrideUrlSlug={assetSlugConfig}>
-              {marketType == MarketType.Strategy && <StrategyForm />}
-              {marketType == MarketType.Staking && <StakeForm />}
-              {marketType != MarketType.Strategy && marketType != MarketType.Staking && <SupplyForm />}
+              {marketType === MarketType.Strategy && <StrategyForm />}
+              {marketType === MarketType.Staking && <StakeForm />}
+              {marketType !== MarketType.Strategy && marketType !== MarketType.Staking && <SupplyForm />}
             </FormSettingsProvider>
           </div>
         </div>

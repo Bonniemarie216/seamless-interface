@@ -26,7 +26,9 @@ const fetchRewardTokensEmissions = async (
 
   const emissions: Emission[] = [];
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const rewardToken of rewardTokens) {
+    // eslint-disable-next-line no-await-in-loop
     const rewardTokenConfig = await readContract(config, {
       address: stakingManagerAddress,
       abi: stakingManagerAbi,
@@ -34,19 +36,21 @@ const fetchRewardTokensEmissions = async (
       args: [stakingToken, rewardToken],
     });
 
+    // eslint-disable-next-line no-await-in-loop
     const symbol = await readContract(config, {
       address: rewardToken,
       abi: erc20Abi,
       functionName: "symbol",
     });
 
+    // eslint-disable-next-line no-await-in-loop
     const decimals = await readContract(config, {
       address: rewardToken,
       abi: erc20Abi,
       functionName: "decimals",
     });
 
-    //TODO: Filter if emission is 0, emission is not started or emission has ended
+    // TODO: Filter if emission is 0, emission is not started or emission has ended
     emissions.push({
       rewardToken: {
         address: rewardToken,

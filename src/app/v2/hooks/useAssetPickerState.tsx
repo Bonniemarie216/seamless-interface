@@ -30,7 +30,7 @@ export const useAssetPickerState = ({
 
   return {
     asset: asset as Address | undefined,
-    marketType: marketType,
+    marketType,
     isStrategy: isStrategyParam === "true",
     setAsset,
     setIsStrategy: setIsStrategyQueryParam,

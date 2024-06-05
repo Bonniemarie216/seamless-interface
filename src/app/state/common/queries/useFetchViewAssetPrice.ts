@@ -23,7 +23,7 @@ export const fetchAssetPriceInBlock = async (
 ): Promise<bigint | undefined> => {
   if (!asset) return undefined;
 
-  if (asset == SEAM_ADDRESS || asset == ESSEAM_ADDRESS) {
+  if (asset === SEAM_ADDRESS || asset === ESSEAM_ADDRESS) {
     return fetchCoinGeckoAssetPriceByAddress({ address: SEAM_ADDRESS, precision: 8 });
   }
 

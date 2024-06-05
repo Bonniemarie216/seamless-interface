@@ -36,9 +36,9 @@ export const TableButtons: React.FC<{
             disableAssetPicker
             hideTag
           >
-            {marketType == MarketType.Lending && <SupplyForm />}
-            {marketType == MarketType.Strategy && <StrategyForm />}
-            {marketType == MarketType.Staking && <StakeForm />}
+            {marketType === MarketType.Lending && <SupplyForm />}
+            {marketType === MarketType.Strategy && <StrategyForm />}
+            {marketType === MarketType.Staking && <StakeForm />}
           </FormSettingsProvider>
         </div>
       </Modal>
@@ -60,9 +60,9 @@ export const TableButtons: React.FC<{
             disableAssetPicker
             hideTag
           >
-            {marketType == MarketType.Lending && <WithdrawForm />}
-            {marketType == MarketType.Strategy && <WithdrawStrategyForm />}
-            {marketType == MarketType.Staking && <UnstakeForm />}
+            {marketType === MarketType.Lending && <WithdrawForm />}
+            {marketType === MarketType.Strategy && <WithdrawStrategyForm />}
+            {marketType === MarketType.Staking && <UnstakeForm />}
           </FormSettingsProvider>
         </div>
       </Modal>

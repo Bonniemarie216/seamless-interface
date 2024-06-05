@@ -109,6 +109,8 @@ export const getTokenDescription = (
       return TokenDescriptionDict[token]?.strategyDescription;
     case MarketType.Staking:
       return TokenDescriptionDict[token]?.stakingDescription;
+    default:
+      return undefined;
   }
 };
 
@@ -122,6 +124,8 @@ export const getTokenTitle = (token: Address, marketType?: MarketType): string |
       return dictElem?.strategyTitle;
     case MarketType.Staking:
       return dictElem?.stakingTitle;
+    default:
+      return undefined;
   }
 };
 
@@ -137,6 +141,8 @@ export const getSecondaryTitle = (token?: Address, tokenName?: string, marketTyp
       return dictElem?.secondaryStrategyTitle;
     case MarketType.Staking:
       return dictElem?.secondaryStakingTitle;
+    default:
+      return undefined;
   }
 };
 
@@ -148,6 +154,8 @@ export const getOverridenName = (token: Address, name?: string, marketType?: Mar
       return TokenDescriptionDict[token]?.secondaryStrategyTitle;
     case MarketType.Staking:
       return TokenDescriptionDict[token]?.stakingTitle;
+    default:
+      return undefined;
   }
 };
 
@@ -161,5 +169,7 @@ export const getHeaderTitle = (token: Address, tokenName?: string, marketType?: 
       return dictElem?.strategyTitle;
     case MarketType.Staking:
       return dictElem?.stakingTitle;
+    default:
+      return undefined;
   }
 };

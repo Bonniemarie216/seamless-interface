@@ -11,11 +11,13 @@ const getColorByType = (type?: MarketType) => {
       return "bg-smallElements-ilm border-metallicBorder";
     case MarketType.Staking:
       return "bg-smallElements-ilm border-metallicBorder";
+    default:
+      return "";
   }
 };
 
-export function getMarketTag(market?: MarketType): string {
-  if (market == undefined) return "";
+export function getMarketTag(market?: MarketType): string | undefined {
+  if (market === undefined) return "";
 
   switch (market) {
     case MarketType.Lending:
@@ -24,6 +26,8 @@ export function getMarketTag(market?: MarketType): string {
       return "ILM";
     case MarketType.Staking:
       return "FARM";
+    default:
+      return undefined;
   }
 }
 
