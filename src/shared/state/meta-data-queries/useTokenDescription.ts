@@ -26,6 +26,7 @@ interface ITokenDescriptionDict {
     secondaryStrategyTitle?: string;
     stakingTitle?: string;
     secondaryStakingTitle?: string;
+    stakingDescription?: string;
   };
 }
 
@@ -74,6 +75,8 @@ export const TokenDescriptionDict: ITokenDescriptionDict = {
     stakingTitle: "Convert SEAM into esSEAM",
     secondaryStakingTitle:
       "Lock your SEAM into escrowed SEAM for additional rewards. esSEAM unlocks back into SEAM linearly over 12 months",
+    stakingDescription:
+      "Lock your SEAM into escrowed SEAM for additional rewards. esSEAM unlocks back into SEAM linearly over 12 months",
   },
   [DEGEN_ADDRESS]: {
     lendingTitle: "Supply DEGEN",
@@ -93,9 +96,20 @@ export const TokenDescriptionDict: ITokenDescriptionDict = {
   },
 };
 
-export const getTokenDescription = (token: Address | undefined, isStrategy: boolean): string | undefined => {
-  if (!token) return undefined;
-  return isStrategy ? TokenDescriptionDict[token]?.strategyDescription : TokenDescriptionDict[token]?.description;
+export const getTokenDescription = (
+  token: Address | undefined,
+  marketType: MarketType | undefined
+): string | undefined => {
+  if (!token || !marketType) return undefined;
+
+  switch (marketType) {
+    case MarketType.Lending:
+      return TokenDescriptionDict[token]?.description;
+    case MarketType.Strategy:
+      return TokenDescriptionDict[token]?.strategyDescription;
+    case MarketType.Staking:
+      return TokenDescriptionDict[token]?.stakingDescription;
+  }
 };
 
 export const getTokenTitle = (token: Address, marketType?: MarketType): string | undefined => {
@@ -111,7 +125,9 @@ export const getTokenTitle = (token: Address, marketType?: MarketType): string |
   }
 };
 
-export const getSecondaryTitle = (token: Address, tokenName?: string, marketType?: MarketType): string | undefined => {
+export const getSecondaryTitle = (token?: Address, tokenName?: string, marketType?: MarketType): string | undefined => {
+  if (!token) return tokenName;
+
   const dictElem = TokenDescriptionDict[token];
 
   switch (marketType) {
@@ -124,9 +140,26 @@ export const getSecondaryTitle = (token: Address, tokenName?: string, marketType
   }
 };
 
-export const getOverridenName = (token: Address, name?: string, isStrategy?: boolean) => {
-  if (isStrategy && TokenDescriptionDict[token]?.secondaryStrategyTitle)
-    return TokenDescriptionDict[token]?.secondaryStrategyTitle;
+export const getOverridenName = (token: Address, name?: string, marketType?: MarketType) => {
+  switch (marketType) {
+    case MarketType.Lending:
+      return name;
+    case MarketType.Strategy:
+      return TokenDescriptionDict[token]?.secondaryStrategyTitle;
+    case MarketType.Staking:
+      return TokenDescriptionDict[token]?.stakingTitle;
+  }
+};
 
-  return name;
+export const getHeaderTitle = (token: Address, tokenName?: string, marketType?: MarketType) => {
+  const dictElem = TokenDescriptionDict[token];
+
+  switch (marketType) {
+    case MarketType.Lending:
+      return tokenName;
+    case MarketType.Strategy:
+      return dictElem?.strategyTitle;
+    case MarketType.Staking:
+      return dictElem?.stakingTitle;
+  }
 };

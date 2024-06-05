@@ -5,9 +5,9 @@ import { useMemo } from "react";
 import { useFetchAssetPrice } from "../../../../../state/common/queries/useFetchViewAssetPrice";
 import { OverrideUrlSlug, useAssetPickerState } from "../../../../hooks/useAssetPickerState";
 import { AssetButton } from "../../../AssetButton";
-import { useFetchViewMaxReserveWithdraw } from "../../../../../state/lending-borrowing/hooks/useFetchViewMaxReserveWithdraw";
-import { walletBalanceDecimalsOptions } from "../../../../../../meta";
+import { ESSEAM_ADDRESS, SEAM_ADDRESS, walletBalanceDecimalsOptions } from "../../../../../../meta";
 import { cValueInUsd } from "../../../../../state/common/math/cValueInUsd";
+import { useFetchViewDetailUserStakedBalance } from "../../../../../state/staking/hooks/useFetchViewDetailUserStakedBalance";
 
 type IProps<T> = Omit<IRHFAmountInputProps, "assetPrice" | "walletBalance" | "assetAddress" | "assetButton"> & {
   name: keyof T;
@@ -53,6 +53,8 @@ type IProps<T> = Omit<IRHFAmountInputProps, "assetPrice" | "walletBalance" | "as
  */
 
 export function RHFWithdrawAmountField<T>({ overrideUrlSlug, assetAddress, ...other }: IProps<T>) {
+  const receiveAsset = assetAddress == SEAM_ADDRESS ? ESSEAM_ADDRESS : assetAddress;
+
   // *** warning *** //
   if (!overrideUrlSlug && !assetAddress) {
     // eslint-disable-next-line no-console
@@ -65,12 +67,14 @@ export function RHFWithdrawAmountField<T>({ overrideUrlSlug, assetAddress, ...ot
   const { asset: assetFromUrl } = useAssetPickerState({ overrideUrlSlug });
   const asset = assetAddress || assetFromUrl;
 
-  const { data: maxWithdrawData, ...rest } = useFetchViewMaxReserveWithdraw(asset, walletBalanceDecimalsOptions);
+  const { data: maxWithdrawData, ...rest } = useFetchViewDetailUserStakedBalance(asset, walletBalanceDecimalsOptions);
 
   // *** metadata *** //
   const {
     data: { decimals },
   } = useToken(asset);
+
+  const { data: receiveTokenData } = useToken(receiveAsset);
 
   // *** form functions *** //
   const { watch } = useFormContext();
@@ -96,7 +100,7 @@ export function RHFWithdrawAmountField<T>({ overrideUrlSlug, assetAddress, ...ot
   return (
     <RHFAmountInput
       {...other}
-      assetAddress={asset}
+      assetAddress={receiveAsset}
       dollarValue={{
         ...otherPrice,
         data: dollarValueData,
@@ -104,13 +108,14 @@ export function RHFWithdrawAmountField<T>({ overrideUrlSlug, assetAddress, ...ot
       walletBalance={{
         ...rest,
         data: {
-          ...maxWithdrawData.tokenAmount,
+          ...maxWithdrawData?.tokenAmount,
+          symbol: receiveTokenData.symbol,
         },
       }}
       protocolMaxValue={{
         ...rest,
         data: {
-          ...maxWithdrawData.tokenAmount,
+          ...maxWithdrawData?.tokenAmount,
         },
       }}
       assetButton={!assetAddress ? <AssetButton overrideUrlSlug={overrideUrlSlug} /> : null}

@@ -7,9 +7,9 @@ import { useFetchAllStakingTokens } from "../../staking/queries/useFetchAllStaki
 import { mergeQueryStates } from "../../../../shared";
 
 export enum MarketType {
-  Lending,
-  Strategy,
-  Staking,
+  Lending = "Lending",
+  Strategy = "Strategy",
+  Staking = "Staking",
 }
 
 export interface Market {

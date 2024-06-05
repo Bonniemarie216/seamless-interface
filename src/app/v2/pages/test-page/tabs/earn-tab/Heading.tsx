@@ -31,7 +31,7 @@ export const Heading = () => {
       <div className="col-span-6">
         <FlexCol className="gap-3">
           {asset ? (
-            <AssetHeading asset={asset} isStrategy={isStrategy} />
+            <AssetHeading asset={asset} marketType={marketType} />
           ) : (
             <FlexCol className="gap-2 min-h-24">
               <Typography type="bold5">Choose your strategy to earn APY</Typography>
@@ -65,10 +65,8 @@ export const Heading = () => {
           <div className="flex md:flex-row flex-wrap gap-12 md:gap-16 justify-between md:justify-center w-full mt-2">
             <FlexCol className="gap-1 md:text-center">
               <Typography type="regular3">TVL</Typography>
-              <AssetTvl asset={asset} isStrategy={isStrategy} typography="bold5" />
-              <FlexRow className="max-w-40 md:max-w-full bg-background-capacity items-center border border-solid gap-1 px-2 py-1.5 rounded-[100px] border-metallicBorder">
-                <CapRemaining asset={asset} isStrategy={isStrategy} />
-              </FlexRow>
+              <AssetTvl asset={asset} marketType={marketType} typography="bold5" />
+              <CapRemaining asset={asset} marketType={marketType} />
             </FlexCol>
             <FlexCol className="gap-1 md:text-center">
               <FlexRow className="gap-2">

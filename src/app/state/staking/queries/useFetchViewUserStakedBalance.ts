@@ -1,5 +1,6 @@
 import { Address } from "viem";
 import {
+  DecimalsOptions,
   FetchBigInt,
   FetchData,
   ViewBigInt,
@@ -33,11 +34,14 @@ export const useFetchUserStakedBalance = (stakingToken?: Address): FetchData<Fet
   };
 };
 
-export const useFetchViewUserStakedBalance = (stakingToken: Address): FetchData<ViewBigInt | undefined> => {
+export const useFetchViewUserStakedBalance = (
+  stakingToken: Address | undefined,
+  decimalsOptions?: Partial<DecimalsOptions>
+): FetchData<ViewBigInt | undefined> => {
   const { data, ...rest } = useFetchUserStakedBalance(stakingToken);
 
   return {
     ...rest,
-    data: formatFetchBigIntToViewBigInt(data),
+    data: formatFetchBigIntToViewBigInt(data, decimalsOptions),
   };
 };

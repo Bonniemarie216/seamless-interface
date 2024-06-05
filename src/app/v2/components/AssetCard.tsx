@@ -31,13 +31,15 @@ export const AssetCard: React.FC<AssetCardProps> = ({ address, hideBorder, isSel
       className={`p-6 pr-8  ${hideBorder ? "" : "border-solid border-b border-b-navy-100"}
         ${isSelected ? "bg-background-selected" : "bg-neutral-0"} cursor-pointer`}
     >
-      <FlexRow className="gap-10 justify-between">
+      <FlexRow className="gap-2 justify-between">
         <FlexRow className="gap-4 items-start">
           <Icon width={40} src={strategyIcon || icon} alt={strategyIcon || icon || ""} />
           <FlexCol className="gap-2 max-w-58 text-start">
             <FlexCol className="gap-[2px]">
               <Typography type="bold3">{getTokenTitle(address, marketType)}</Typography>
-              <Typography type="regular1">{getSecondaryTitle(address, name, marketType)}</Typography>
+              <Typography type="regular1" className="max-w-64">
+                {getSecondaryTitle(address, name, marketType)}
+              </Typography>
             </FlexCol>
             <FlexRow className="gap-2">
               <Tag marketType={marketType} />

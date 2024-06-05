@@ -8,7 +8,6 @@ import { StrategyData, ilmAssetStrategiesMap } from "../../../state/loop-strateg
 import { WETH_ADDRESS } from "../../../../meta";
 import { MarketType } from "../../../state/common/hooks/useFetchAllMarkets";
 import { IncentivesButton } from "./IncentivesButton";
-import { AssetApr } from "./AssetApr";
 
 interface AssetApyProps extends DisplayPercentageProps {
   asset: Address;
@@ -81,6 +80,10 @@ export const AssetApy: React.FC<AssetApyProps> = ({ asset, marketType, ...rest }
   }
 
   if (marketType == MarketType.Staking) {
-    return <AssetApr asset={asset} marketType={marketType} {...rest} />;
+    return (
+      <FlexCol className="gap-1 text-center items-center">
+        <IncentivesButton asset={asset} marketType={marketType} />
+      </FlexCol>
+    );
   }
 };

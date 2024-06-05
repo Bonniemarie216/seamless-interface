@@ -1,4 +1,6 @@
 import { FlexCol, Typography } from "@shared";
+import { Link } from "react-router-dom";
+import { RouterConfig } from "../../../../../router";
 
 export const Notice = () => {
   return (
@@ -11,7 +13,8 @@ export const Notice = () => {
         esSEAM cannot be transferred, but once esSEAM unlocks, it can be claimable as SEAM. 1 esSEAM = 1 SEAM.
       </Typography>
       <Typography type="regular1">
-        To delegate your esSEAM voting power and claim your unlocked SEAM, go to the Governance tab. (hyperlink)
+        To delegate your esSEAM voting power and claim your unlocked SEAM, go to the Governance
+        <Link to={RouterConfig.Routes.governance}> tab. </Link>
       </Typography>
     </FlexCol>
   );

@@ -12,6 +12,7 @@ import {
   ethLong,
   AERO_ADDRESS,
   BRETT_ADDRESS,
+  ESSEAM_ADDRESS,
 } from "./constants";
 import { Address } from "viem";
 
@@ -71,6 +72,9 @@ export const TokenDataDict: ITokenDataDict = {
     logo: degenLogo,
   },
   [SEAM_ADDRESS]: {
+    logo: seamLogo,
+  },
+  [ESSEAM_ADDRESS]: {
     logo: seamLogo,
   },
   [AERO_ADDRESS]: {

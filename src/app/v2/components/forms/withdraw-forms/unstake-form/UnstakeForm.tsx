@@ -21,13 +21,13 @@ import { Notice } from "./Notice";
 
 export const UnstakeForm = () => {
   const { asset, onTransaction, hideTag, disableAssetPicker, overrideUrlSlug } = useFormSettingsContext();
-  const { data: tokenData } = useFullTokenData(asset);
-
   const receiveToken = asset == SEAM_ADDRESS ? ESSEAM_ADDRESS : asset;
+
+  const { data: tokenData } = useFullTokenData(receiveToken);
 
   const {
     data: { symbol },
-  } = useFullTokenData(asset);
+  } = useFullTokenData(receiveToken);
 
   const {
     data: { symbol: receiveTokenSymbol, decimals: receiveTokenDecimals, logo: receiveTokenLogo },

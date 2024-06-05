@@ -112,7 +112,9 @@ const StrategyFormLocal: React.FC<{
               <Typography type="bold4">
                 {asset ? getTokenTitle(asset, MarketType.Strategy) : "Select strategy to get started"}
               </Typography>
-              <Typography type="regular3">{asset ? getOverridenName(asset, undefined, true) : ""}</Typography>
+              <Typography type="regular3">
+                {asset ? getOverridenName(asset, undefined, MarketType.Strategy) : ""}
+              </Typography>
             </FlexCol>
 
             {asset != null && !hideTag && <Tag marketType={MarketType.Strategy} />}

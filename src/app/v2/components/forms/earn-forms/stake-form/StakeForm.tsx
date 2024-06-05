@@ -15,7 +15,7 @@ import { Tag } from "../../../../pages/test-page/tabs/earn-tab/Tag";
 import { useFormSettingsContext } from "../../contexts/useFormSettingsContext";
 import { RHFSupplyAmountField } from "./RHFSupplyAmountField";
 import { useFetchViewMaxUserReserveDeposit } from "../../../../../state/lending-borrowing/hooks/useFetchViewMaxReserveDeposit";
-import { getTokenTitle } from "../../../../../../shared/state/meta-data-queries/useTokenDescription";
+import { getOverridenName } from "../../../../../../shared/state/meta-data-queries/useTokenDescription";
 import { GauntletOptimized } from "../../../specific-components/GauntletOptimized";
 import { getBaseAssetConfig } from "../../../../../state/lending-borrowing/config/BaseAssetsConfig";
 import { MarketType } from "../../../../../state/common/hooks/useFetchAllMarkets";
@@ -87,9 +87,11 @@ export const StakeForm = () => {
           <FlexRow className="justify-between items-start">
             <FlexCol className="gap-1 min-h-14 w-full">
               <Typography type="bold4">
-                {asset ? getTokenTitle(asset, MarketType.Staking) : "Select strategy to get started"}
+                {asset
+                  ? getOverridenName(asset, tokenData?.name, MarketType.Staking)
+                  : "Select strategy to get started"}
               </Typography>
-              <Typography type="regular3">{tokenData.name}</Typography>
+              <Typography type="regular3">{tokenData?.name}</Typography>
             </FlexCol>
 
             <FlexRow className="gap-1 items-center">
