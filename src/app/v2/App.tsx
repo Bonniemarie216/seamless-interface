@@ -9,12 +9,12 @@ import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 import { ConnectButtonProvider, FallbackPage, FlexCol, NotificationProvider, PageNotFound } from "@shared";
 //* * SENTRY **/
 import * as Sentry from "@sentry/react";
-import { LandingPage } from "./pages/test-page/LandingPage";
 import { QueryParamProvider } from "use-query-params";
 import { Footer } from "./components/footer/Footer";
 import { NavigationBar } from "./components/navbar/NavigationBar";
 import { useFetchAllAssets } from "../state/common/hooks/useFetchAllAssets";
 import { SurveyBanner } from "./components/navbar/SurveyBanner";
+import { LandingPageRedesign } from "./pages/landing-page-redesign/LandingPageRedesign";
 
 const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
@@ -35,7 +35,7 @@ export function App() {
           <FlexCol className="min-h-screen">
             <NotificationProvider>
               <SentryRoutes>
-                <Route path={RouterConfig.Routes.markets} element={<LandingPage />} />
+                <Route path={RouterConfig.Routes.markets} element={<LandingPageRedesign />} />
                 <Route path="*" element={<PageNotFound />} />
               </SentryRoutes>
             </NotificationProvider>

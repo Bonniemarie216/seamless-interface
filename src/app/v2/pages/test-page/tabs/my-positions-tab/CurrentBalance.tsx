@@ -5,7 +5,7 @@ import { useFetchViewDetailUserEquity } from "../../../../../state/loop-strategy
 import { useFetchViewAssetBalance } from "../../../../../state/common/queries/useFetchViewAssetBalance";
 import { walletBalanceDecimalsOptionsTemp } from "../../../../../../meta";
 
-const CurrentBalanceStrategy: React.FC<{ asset: Address }> = ({ asset }) => {
+export const CurrentBalanceStrategy: React.FC<{ asset: Address }> = ({ asset }) => {
   const {
     data: { tokenAmount, dollarAmount },
     ...restEquity
