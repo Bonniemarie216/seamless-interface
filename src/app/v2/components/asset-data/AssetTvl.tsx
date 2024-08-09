@@ -10,7 +10,7 @@ interface AssetTvlProps extends DisplayPercentageProps {
   isStrategy?: boolean;
 }
 
-const StrategyTvl: React.FC<{ subStrategy?: Address }> = ({ subStrategy, ...rest }) => {
+export const StrategyTvl: React.FC<{ subStrategy?: Address }> = ({ subStrategy, ...rest }) => {
   const {
     data: { dollarAmount },
     ...restEquity

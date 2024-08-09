@@ -16,7 +16,7 @@ export const MyStrategiesDesktopTableRow: React.FC<{
   const isStrategy = !!strategy;
 
   const { data: strategyState } = useFetchStrategyBySubStrategyAddressOrAddress(strategy || asset);
-  const subStrategyData = strategyState?.subStrategyData.find((sub) => sub.address === strategy);
+  const subStrategyData = strategyState?.subStrategyData?.find((sub) => sub.address === strategy);
 
   const {
     data: { logo: icon, name, subTitle },
@@ -24,7 +24,7 @@ export const MyStrategiesDesktopTableRow: React.FC<{
 
   return (
     <div className="hidden md:block py-4 border-solid border-b border-b-navy-100">
-      <TableRow className="md:grid grid-cols-12" hideBorder={hideBorder}>
+      <TableRow className="md:grid grid-cols-12">
         <TableCell alignItems="items-start col-span-4">
           <FlexRow className="gap-4 items-start">
             <Icon width={40} src={icon} alt="logo" />
@@ -34,7 +34,7 @@ export const MyStrategiesDesktopTableRow: React.FC<{
                 <Typography type="regular1">{subTitle}</Typography>
               </FlexCol>
               <FlexRow>
-                <Tag tag={strategy ? "ILM" : "LEND"} />
+                <Tag tag="Long" />
               </FlexRow>
             </FlexCol>
           </FlexRow>

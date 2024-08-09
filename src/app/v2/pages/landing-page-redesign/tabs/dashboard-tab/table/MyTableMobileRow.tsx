@@ -1,16 +1,13 @@
 import { Address } from "viem";
-import { FlexRow, FlexCol, Icon, Typography } from "@shared";
-import { Tag } from "../../../../../components/asset-data/Tag";
+import { FlexCol, FlexRow, Icon, Typography } from "@shared";
 import { RandomNumber } from "../../../../../components/specific-components/RandomNumber";
+import { TableButtons } from "./TableButtons";
+import { useFullTokenData } from "../../../../../../state/common/meta-data-queries/useFullTokenData";
+import { Tag } from "../../../../../components/asset-data/Tag";
 import polygonSvg from "@assets/common/polygon.svg";
 import { AprTooltipForMaxApy } from "../../../../../components/incentives/AprTooltipForMaxApy";
-import { StrategyTvl } from "../../../../../components/asset-data/AssetTvl";
-import { useFullTokenData } from "../../../../../../state/common/meta-data-queries/useFullTokenData";
 
-export const MyStrategiesMobileTableRow: React.FC<{
-  strategy: Address;
-  hideBorder?: boolean;
-}> = ({ strategy }) => {
+export const MyTableMobileRow: React.FC<{ strategy: Address }> = ({ strategy }) => {
   const {
     data: { logo: icon, name, description, tags },
   } = useFullTokenData(strategy);
@@ -20,16 +17,14 @@ export const MyStrategiesMobileTableRow: React.FC<{
       <FlexCol className="items-end mb-[-10px]">
         <FlexRow>{tags?.map((tag) => <Tag key={tag} tag={tag} />)}</FlexRow>
       </FlexCol>
-      <FlexRow className="items-center mb-4">
-        <FlexRow className="gap-4 items-center">
-          <Icon width={40} src={icon} alt="logo" />
-          <FlexCol className="gap-1 text-start">
-            <Typography type="bold3">{name}</Typography>
-            <Typography type="regular1">{description}</Typography>
-          </FlexCol>
-        </FlexRow>
-      </FlexRow>
 
+      <FlexRow className="items-center gap-4 mb-4">
+        <Icon width={30} src={icon} alt="Strategy Logo" />
+        <FlexCol>
+          <Typography type="bold3">{name}</Typography>
+          <Typography type="regular1">{description}</Typography>
+        </FlexCol>
+      </FlexRow>
       <FlexRow className="justify-between">
         <FlexCol className="gap-2">
           <AprTooltipForMaxApy asset={strategy} isStrategy />
@@ -45,9 +40,13 @@ export const MyStrategiesMobileTableRow: React.FC<{
           </FlexRow>
           <FlexRow className="items-center gap-1">
             <Typography type="regular1">TVL: </Typography>
-            <StrategyTvl subStrategy={strategy} />
+            <RandomNumber typography="bold3" className="" symbol="%" symbolPosition="after" />
           </FlexRow>
         </FlexCol>
+      </FlexRow>
+
+      <FlexRow className="justify-between">
+        <TableButtons isStrategy subStrategy={strategy} />
       </FlexRow>
     </div>
   );

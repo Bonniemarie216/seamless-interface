@@ -1,56 +1,62 @@
 import { Address } from "viem";
 import { TableRow, TableCell, FlexRow, Icon, FlexCol, Typography } from "../../../../../../../shared";
 import { useFullTokenData } from "../../../../../../state/common/meta-data-queries/useFullTokenData";
-import { CurrentBalanceStrategy } from "../../../../test-page/tabs/my-positions-tab/CurrentBalance";
 import { Tag } from "../../../../../components/asset-data/Tag";
+import { RandomNumber } from "../../../../../components/specific-components/RandomNumber";
+
+import polygonSvg from "@assets/common/polygon.svg";
+import { AprTooltipForMaxApy } from "../../../../../components/incentives/AprTooltipForMaxApy";
+import { StrategyTvl } from "../../../../../components/asset-data/AssetTvl";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
 
 export const MyStrategiesDesktopTableRow: React.FC<{
   strategy: Address;
   hideBorder?: boolean;
 }> = ({ strategy, hideBorder }) => {
-
   const {
-    data: { logo: icon, name, subTitle },
+    data: { logo: icon, name, description, tags },
   } = useFullTokenData(strategy);
 
   return (
-    <div className="hidden md:block py-4 border-solid border-b border-b-navy-100">
-      <TableRow className="md:grid grid-cols-12" hideBorder={hideBorder}>
-        <TableCell alignItems="items-start col-span-4">
-          <FlexRow className="gap-4 items-start">
-            <Icon width={40} src={icon} alt="logo" />
+    <div
+      className={`hidden cursor-pointer md:flex items-center border-solid min-h-[148px] ${hideBorder ? "" : "border-b border-b-navy-100"}`}
+    >
+      <TableRow className="md:grid grid-cols-7 relative">
+        <TableCell alignItems="items-center col-span-2 pr-6">
+          <FlexRow className="gap-4 items-center ">
+            <Icon width={64} src={icon} alt="logo" />
             <FlexCol className="gap-2 text-start">
               <FlexCol className="gap-[2px]">
                 <Typography type="bold3">{name}</Typography>
-                <Typography type="regular1">{subTitle}</Typography>
+                <Typography type="regular1">{description}</Typography>
               </FlexCol>
-              <FlexRow>
-                <Tag tag="ILM" />
-              </FlexRow>
             </FlexCol>
           </FlexRow>
         </TableCell>
 
-        <TableCell className="col-span-2">
-          <CurrentBalanceStrategy asset={strategy} />
+        <TableCell className="col-span-1">
+          <FlexRow>{tags?.map((tag) => <Tag key={tag} tag={tag} />)}</FlexRow>
+        </TableCell>
+        <TableCell className="col-span-1">
+          <RandomNumber typography="bold3" className="text-primaryv2-400" symbol="$" />
         </TableCell>
 
-        <TableCell className="col-span-3">
-          {/* <AssetApy
-            multiplier={
-              `${subStrategyData?.targetMultiple.value}${subStrategyData?.targetMultiple.symbol}` || undefined
-            }
-            asset={asset}
-            subStrategy={strategy}
-            isStrategy={isStrategy}
-            typography="bold3"
-          />
-          <AprTooltip asset={isStrategy ? strategy : asset} isStrategy={isStrategy} /> */}
+        <TableCell className="col-span-1">
+          <FlexRow className="items-center gap-1">
+            <Icon src={polygonSvg} alt="polygon" width={12} height={12} />
+            <RandomNumber typography="bold3" className="text-successv2-900" symbol="%" symbolPosition="after" />
+          </FlexRow>
+        </TableCell>
+        <TableCell className="col-span-1">
+          <div className="flex">
+            <AprTooltipForMaxApy asset={strategy} isStrategy />
+          </div>
+        </TableCell>
+        <TableCell className="col-span-1">
+          <StrategyTvl subStrategy={strategy} />
         </TableCell>
 
-        <TableCell className="col-span-3" alignItems="items-center">
-          {/* <TableButtons asset={asset} subStrategy={strategy} isStrategy={isStrategy} /> */}
-        </TableCell>
+        <ChevronRightIcon width={20} className="absolute right-6" />
       </TableRow>
     </div>
   );

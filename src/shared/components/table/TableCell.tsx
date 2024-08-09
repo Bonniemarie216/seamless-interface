@@ -37,9 +37,9 @@ export const TableCell: React.FC<{
   className?: string;
   rest?: React.DetailedHTMLProps<React.TdHTMLAttributes<HTMLTableCellElement>, HTMLTableCellElement>;
   alignItems?: string;
-}> = ({ children, className, rest, alignItems = "items-center" }) => {
+}> = ({ children, className, rest, alignItems = "items-left" }) => {
   return (
-    <div className={`flex flex-col text-center ${alignItems} ${className || ""}`} {...rest}>
+    <div className={`flex flex-col text-left ${alignItems} ${className || ""}`} {...rest}>
       {children}
     </div>
   );

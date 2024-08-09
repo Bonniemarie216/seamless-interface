@@ -1,6 +1,6 @@
 import { Address } from "viem";
 import { FetchData } from "../../../../shared/types/Fetch";
-import { strategiesConfig } from "../../settings/config";
+import { strategyConfigv2 } from "../../settings/config";
 import { LendMarketState, StrategyState } from "../types/StateTypes";
 
 /**
@@ -12,21 +12,21 @@ export const useFetchAllStrategies = (): {
   state: FetchData<(LendMarketState | StrategyState)[]>;
 } => {
   // todo: fetch rest of the things for strategies?
-  const ilmMarkets: StrategyState[] = [];
-  Object.keys(strategiesConfig).forEach((key) => {
-    ilmMarkets.push({
+  const strategies: StrategyState[] = [];
+  Object.keys(strategyConfigv2).forEach((key) => {
+    strategies.push({
       isStrategy: true,
-      tags: ["ILM"],
-      ...strategiesConfig[key as Address],
+      tags: strategyConfigv2[key as Address].tags || [],
+      ...strategyConfigv2[key as Address],
     });
   });
 
   return {
     state: {
-      data: ilmMarkets,
+      data: strategies,
       ...{
         isFetched: true,
-        isLoading: false
+        isLoading: false,
       },
     },
   };

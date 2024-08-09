@@ -1,7 +1,9 @@
-import React from 'react'
+import { TableContainer } from "./table/TableContainer";
 
 export const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div>
+      <TableContainer />
+    </div>
+  );
+};
