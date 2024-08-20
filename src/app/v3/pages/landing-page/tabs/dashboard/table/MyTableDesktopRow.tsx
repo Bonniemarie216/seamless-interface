@@ -1,18 +1,22 @@
 import { Address } from "viem";
-import { TableRow, TableCell, Icon, FlexCol, Typography, FlexRow } from "../../../../../../../shared";
-import { useFullTokenData } from "../../../../../../statev3/common/meta-data-queries/useFullTokenData";
-import { RandomNumber } from "../../../../../components/specific-components/RandomNumber";
-import { AprTooltip } from "../../../../../components/incentives/AprTooltip";
-import { Tag } from "../../../../../components/asset-data/Tag";
+import { TableRow, TableCell, Icon, FlexCol, Typography, FlexRow } from "@shared";
+
 import { TableButtons } from "./TableButtons";
+import { RandomNumber } from "../../../../../components/other/RandomNumber";
+import { stateMock } from "../../../mocks";
+
+import ilmIcon from "@assets/ilms/ethLong-ilm.svg";
+import { Tag } from "../../../../../components/strategy-data/Tag";
 
 export const MyTableDesktopRow: React.FC<{
   strategy: Address;
   hideBorder?: boolean;
 }> = ({ strategy, hideBorder }) => {
-  const {
-    data: { logo: icon, name, description, tags },
-  } = useFullTokenData(strategy);
+  // todo use useFullTokenData instead of mock
+  const strategyMock = stateMock.data.find((s) => s.address === strategy);
+  const name = strategyMock?.name;
+  const description = strategyMock?.description;
+  const icon = ilmIcon;
 
   return (
     <TableRow
@@ -34,7 +38,7 @@ export const MyTableDesktopRow: React.FC<{
       </TableCell>
 
       <TableCell className="col-span-2">
-        <FlexRow>{tags?.map((tag) => <Tag key={tag} tag={tag} />)}</FlexRow>
+        <Tag tag="Staking" />
       </TableCell>
       <TableCell className="col-span-3">
         <RandomNumber symbol="$" />
@@ -43,7 +47,7 @@ export const MyTableDesktopRow: React.FC<{
         <RandomNumber symbol="%" symbolPosition="after" />
       </TableCell>
       <TableCell className="col-span-3">
-        <AprTooltip asset={strategy} />
+        <RandomNumber symbol="%" symbolPosition="after" />
       </TableCell>
       <TableCell className="col-span-5 flex justify-evenly items-center">
         <TableButtons strategy={strategy} isStrategy />

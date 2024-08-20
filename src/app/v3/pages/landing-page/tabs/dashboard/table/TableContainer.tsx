@@ -1,7 +1,9 @@
 import { TableRow, TableCell, Typography } from "@shared";
 import { MyTableDesktopRow } from "./MyTableDesktopRow";
+import { stateMock } from "../../../mocks";
 
 export const TableContainer = () => {
+  const state = stateMock;
 
   return (
     <div>
