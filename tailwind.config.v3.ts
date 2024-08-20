@@ -29,6 +29,10 @@ export default {
         xxl: "1440px",
         xxxl: "1800px",
       },
+      maxWidth: {
+        "page-content": "1020px",
+      },
+
       borderWidth: {
         thin: "1.3px",
       },
@@ -51,6 +55,9 @@ export default {
           lend: "#FCF8CF",
           ilm: "#CFFCF5",
           rewardAPY: "#E4F7E6",
+          gray: "#0B254F",
+          red: "#FD6F41",
+          blue: "#4F68F7",
         },
 
         background: {
